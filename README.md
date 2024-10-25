@@ -12,10 +12,10 @@ Helixer.py --lineage fungi \
            --subsequence-length 21384 \
            --overlap-offset 10692 \
            --overlap-core-length 16038 \
-           --species <ISOLATE_NAME> \
+           --species maggy_isolate \
            --peak-threshold 0.6 \
-           --fasta-path <ASSEMBLY_FASTA> \
-           --gff-output-path <OUTPUT_GFF>
+           --fasta-path ./assemblies/maggy_isolate.fa \
+           --gff-output-path ./outputs/maggy_isolate.gff
 ```
 
 ### Explanation of Key Parameters
@@ -25,5 +25,50 @@ Helixer.py --lineage fungi \
 - `--subsequence-length`: Set to 21384, which is the default value for fungi.
 - `--overlap-offset`: Set to 10692, also the default for fungi.
 - `--overlap-core-length`: Set to 16038, the default for fungi.
-- `--fasta-path`: Specify the path to the reference genome assembly (FASTA format).
-- `--gff-output-path`: Specify the path for saving the output GFF file.
+- `--fasta-path`: Path to the reference genome assembly (`maggy_isolate.fa`).
+- `--gff-output-path`: Path for saving the output GFF file (`maggy_isolate.gff`).
+
+### Additional Processing Steps
+
+After running Helixer, use the following commands to further process the GFF and FASTA files:
+
+#### Extracting CDS from GFF
+
+Use `gffread` to extract CDS sequences from the GFF file:
+
+```bash
+gffread -x ./outputs/maggy_isolate_cds.fa \
+        -g ./assemblies/maggy_isolate.fa \
+        ./outputs/maggy_isolate.gff
+```
+
+#### Secretome Filtering and QC
+
+Run the QC script on the secretome-filtered GFF file:
+
+```bash
+./20_gff_qc.py ./outputs/maggy_isolate.gff \
+               ./outputs/maggy_isolate_cds.fa \
+               150,180,195 \
+               10,25,50 \
+               1> ./outputs/maggy_isolate_qc.gff \
+               2> ./outputs/maggy_isolate_qc.txt
+```
+
+150,180,195 are the check points for minimum lengths for CDS.
+
+10,25,50 are the check points for the percentage of masked bases in the CDS.
+
+#### Filtering the QC GFF
+
+Filter the proteome GFF file based on QC results:
+
+```bash
+grep -v 'not_multiple_of_3' ./outputs/maggy_isolate_qc.gff | \
+grep -v 'stop_codon_in_cds' | \
+grep -v 'no_start_codon' | \
+grep -v 'no_stop_codon' | \
+grep -v 'shorter_than_150nt' | \
+grep -v 'masked_over_25' | \
+cut -f 1-9 > ./outputs/maggy_isolate.filtered.gff
+```
