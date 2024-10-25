@@ -44,9 +44,8 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
 
 #### Annotation QC
 
-`20_gff_qc.py` is a script that checks the quality of the GFF file based on the CDS sequences.
-
-[biopython](https://biopython.org) is required to run this script.
+- `20_gff_qc.py` is a script that checks the quality of the GFF file based on the CDS sequences.
+- [biopython](https://biopython.org) is required to run this script.
 
 ```bash
 ./20_gff_qc.py ./outputs/maggy_isolate.gff \
@@ -57,9 +56,8 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
                2> ./outputs/maggy_isolate_qc.txt
 ```
 
-150,180,195 are the check points for minimum lengths for CDS.
-
-10,25,50 are the check points for the percentage of masked bases in the CDS.
+- 150,180,195 are the check points for minimum lengths for CDS.
+- 10,25,50 are the check points for the percentage of masked bases in the CDS.
 
 #### Filtering the QC GFF
 
