@@ -45,6 +45,7 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
 #### Annotation QC
 
 `20_gff_qc.py` is a script that checks the quality of the GFF file based on the CDS sequences.
+
 [biopython](https://biopython.org) is required to run this script.
 
 ```bash
