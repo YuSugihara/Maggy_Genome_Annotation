@@ -44,7 +44,8 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
 
 #### Annotation QC
 
-Run the QC script on the secretome-filtered GFF file:
+`20_gff_qc.py` is a script that checks the quality of the GFF file based on the CDS sequences.
+`biopython` is required to run this script.
 
 ```bash
 ./20_gff_qc.py ./outputs/maggy_isolate.gff \
