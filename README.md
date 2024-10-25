@@ -53,7 +53,7 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
                ./outputs/maggy_isolate_cds.fa \
                150,180,195 \
                10,25,50 \
-               1> ./outputs/maggy_isolate_qc.gff \
+               1> ./outputs/maggy_isolate_qc.tsv \
                2> ./outputs/maggy_isolate_qc.txt
 ```
 
@@ -63,10 +63,10 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
 
 #### Filtering the QC GFF
 
-Filter the proteome GFF file based on QC results:
+Filter the GFF file based on QC results:
 
 ```bash
-grep -v 'not_multiple_of_3' ./outputs/maggy_isolate_qc.gff | \
+grep -v 'not_multiple_of_3' ./outputs/maggy_isolate_qc.tsv | \
 grep -v 'stop_codon_in_cds' | \
 grep -v 'no_start_codon' | \
 grep -v 'no_stop_codon' | \
