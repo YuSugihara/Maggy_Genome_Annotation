@@ -42,7 +42,7 @@ gffread -x ./outputs/maggy_isolate_cds.fa \
         ./outputs/maggy_isolate.gff
 ```
 
-#### Secretome Filtering and QC
+#### Annotation QC
 
 Run the QC script on the secretome-filtered GFF file:
 
